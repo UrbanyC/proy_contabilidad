@@ -6,6 +6,8 @@
 package contabilidad.fomulario;
 
 import javax.swing.JOptionPane;
+import java.io.*;
+import java.util.Scanner;
 
 /**
  *
@@ -224,8 +226,63 @@ public class usuario extends javax.swing.JFrame {
          }
         
         
-        int RolAccess =  cBoxAccess.getSelectedIndex();
+        int RolAccessIndex =  cBoxAccess.getSelectedIndex();
+        String RolAccess = String.valueOf(RolAccessIndex);
         JOptionPane.showMessageDialog(this, "Acceso seleccionado"+RolAccess);
+        
+      File file = new File("C:\\Users\\savie\\OneDrive\\Documentos\\GitHub\\proy_contabilidad\\programa_contabilidad\\src\\contabilidad\\fomulario\\database.txt");
+        try {
+            Scanner scanner = new Scanner(file);
+            StringBuilder content = new StringBuilder();
+            boolean usersSection = false;
+            int lastUserId = 0;
+
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine().trim();
+                content.append(line).append("\n");
+
+                if (line.trim().equals("- USUARIOS")) {
+                    usersSection = true;
+                } else if (usersSection && !line.trim().isEmpty() && !line.startsWith("-")) {
+                    String[] fields = line.split("\\|");
+                    if (fields.length >= 1) {
+                        try {
+                            int userId = Integer.parseInt(fields[0]);
+                            lastUserId = Math.max(lastUserId, userId);
+                        } catch (NumberFormatException e) {
+                            // Manejar errores de conversión (por ejemplo, si el ID no es un número válido)
+                            System.err.println("Error al convertir el ID de usuario: " + e.getMessage());
+                        }
+                    }
+                }
+            }
+
+            // Generar el nuevo ID de usuario
+            int newUserId = lastUserId + 1;
+            String userIdAsString = String.valueOf(newUserId);
+
+            // Crear la nueva entrada de usuario (reemplaza con los valores reales)
+            String newUserEntry = String.format("%s"+"|"+txtUser.getText()+"|"+txtPassword.getText()+"|"+RolAccess+"|"+txtName.getText()+"|"+txtLastName.getText()+"|"+txtEmail.getText()+"\n", userIdAsString);
+
+            // Insertar la nueva entrada después del último registro de usuarios
+            int usersIndex = content.indexOf("- USUARIOS");
+            int usersEndIndex = content.indexOf("- ", usersIndex + 1);
+            content.insert(usersEndIndex, newUserEntry);
+
+            // Escribir los datos actualizados en el archivo
+            FileWriter writer = new FileWriter(file);
+            writer.write(content.toString());
+            writer.close();
+
+            System.out.println("Nuevo usuario con ID " + userIdAsString + " ha sido agregado a la sección USUARIOS en 'database.txt'.");
+              JOptionPane.showMessageDialog(null, "Usuario creado correctamente");
+        } catch (FileNotFoundException e) {
+            System.err.println("Error: El archivo 'database.txt' no se encontró.");
+        } catch (IOException e) {
+            System.err.println("Error al escribir en el archivo 'database.txt'.");
+        }
+    
+    
                 
     }//GEN-LAST:event_btnSaveActionPerformed
 
