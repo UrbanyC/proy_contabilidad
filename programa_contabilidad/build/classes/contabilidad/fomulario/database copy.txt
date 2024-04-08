@@ -1,0 +1,24 @@
+- DEPARTAMENTO
+id_depto|desc_depto
+001|Contabilidad
+
+- PUESTOS
+id_puesto|nombre_puesto
+001|Gerente
+
+- USUARIOS
+id_usuario|login_usuario|pass_usuario|nivel_acceso|nombre_usuario|apellidos_usuario|email_usuario
+001|urban|12345|1|Urbany|Castanos Cid|fulano@gmail.com
+002|savier|12345|0|Savier|Checo|fulano@gmail.com
+
+- EMPLEADO
+id_empleado|nombre_emp|apellido_pat_emp|apellido_mat_emp|direccion_emp|telef_emp|sexo_emp|id_depto_emp|fecha_ingreso_emp|id_puesto_emp|coop|salario_emp
+001|Urbany|Castanos|Cid|Rafey, Santiago|8097761857|hombre|001|30/01/2020|001|false|35000
+
+- NOMINA
+id_nomina|id_usuario|fecha_nomina|salario_bruto|valor_afp|valor_ars|valor_coop|valor_isr|sueldo_neto|status_nomina
+001|001|15/04|35000|2.87|3.04|15|32962.03|true
+
+- COOPERATIVA
+id_empleado|porcentaje_desc|balance_acum
+001|15|10000
