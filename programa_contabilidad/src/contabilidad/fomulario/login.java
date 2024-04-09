@@ -5,6 +5,8 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 
+
+
 public class login extends javax.swing.JFrame {
 
     private javax.swing.JButton btnAcceder;
@@ -14,10 +16,12 @@ public class login extends javax.swing.JFrame {
     private javax.swing.JPasswordField txtPassword;
     private javax.swing.JTextField txtUser;
 
+    
     public login() {
         initComponents();
     }
 
+    
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
@@ -98,7 +102,7 @@ public class login extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtUserActionPerformed
 
-    private void btnAccederActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAccederActionPerformed
+    private void btnAccederActionPerformed(java.awt.event.ActionEvent evt) {                                           
 
         String user = this.txtUser.getText();
         String password = String.valueOf(this.txtPassword.getPassword());
@@ -114,7 +118,9 @@ public class login extends javax.swing.JFrame {
         if (loggedIn) {
             JOptionPane.showMessageDialog(this, "Inicio de sesión exitoso");
             this.setVisible(false);
-            inicio inicio1 = new inicio();
+            
+            int rol = getUserRol(user, password);
+            inicio inicio1 = new inicio(rol);
             inicio1.setVisible(true);
         } else {
             JOptionPane.showMessageDialog(this, "Credenciales incorrectas");
@@ -122,7 +128,7 @@ public class login extends javax.swing.JFrame {
     }
 
     private boolean validarCredenciales(String user, String password) {
-        File file = new File("C:\\Users\\Udwnetwork\\Desktop\\proy_contabilidad\\programa_contabilidad\\src\\contabilidad\\fomulario\\database.txt");
+        File file = new File("C:\\Users\\savie\\OneDrive\\Documentos\\GitHub\\proy_contabilidad\\programa_contabilidad\\src\\contabilidad\\fomulario\\database.txt");
         try {
             BufferedReader br = new BufferedReader(new java.io.FileReader(file));
             String line;
@@ -131,6 +137,26 @@ public class login extends javax.swing.JFrame {
                 if (parts.length >= 3 && parts[1].equals(user) && parts[2].equals(password)) {
                     br.close();
                     return true;
+                }
+            }
+            br.close();
+        } catch (IOException e) {
+            e.printStackTrace(); // Imprimir el stack trace completo
+            JOptionPane.showMessageDialog(this, "Error al leer la base de datos");
+        }
+        return false;
+    }
+    
+        private int getUserRol(String user, String password) {
+        File file = new File("C:\\Users\\savie\\OneDrive\\Documentos\\GitHub\\proy_contabilidad\\programa_contabilidad\\src\\contabilidad\\fomulario\\database.txt");
+        try {
+            BufferedReader br = new BufferedReader(new java.io.FileReader(file));
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split("\\|");
+                if (parts.length >= 3 && parts[1].equals(user) && parts[2].equals(password)) {
+                    br.close();
+                    return Integer.parseInt(parts[3].toString());
                 }
             }
             br.close();
