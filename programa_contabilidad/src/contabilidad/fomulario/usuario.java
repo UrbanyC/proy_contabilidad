@@ -555,62 +555,116 @@ public class usuario extends javax.swing.JFrame {
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
      // Ruta del archivo database.txt (ajusta esto según tu ubicación)
-        String filePath = "C:\\Users\\savie\\OneDrive\\Documentos\\GitHub\\proy_contabilidad\\programa_contabilidad\\src\\contabilidad\\fomulario\\database.txt";
+    String filePath = "C:\\Users\\savie\\OneDrive\\Documentos\\GitHub\\proy_contabilidad\\programa_contabilidad\\src\\contabilidad\\fomulario\\database.txt";
 
-        // ID del usuario que deseas actualizar (reemplaza con el valor correcto)
-        int userIdToUpdate =  Integer.parseInt(txtUserId.getText());
+    // ID del usuario que deseas actualizar (reemplaza con el valor correcto)
+    int userIdToUpdate =  Integer.parseInt(txtUserId.getText());
 
-        String newUsername = txtUser.getText();
-        String newPassword = txtPassword.getText();
-        String newFirstName = txtName.getText();
-        String newLastName = txtLastName.getText();
-        String newEmail = txtEmail.getText();
-        int newRolAccessIndex = cBoxAccess.getSelectedIndex();
-        String newRolAccess = String.valueOf(newRolAccessIndex);
+    String newUsername = txtUser.getText();
+    String newPassword = txtPassword.getText();
+    String newFirstName = txtName.getText();
+    String newLastName = txtLastName.getText();
+    String newEmail = txtEmail.getText();
+    int newRolAccessIndex = cBoxAccess.getSelectedIndex();
+    String newRolAccess = String.valueOf(newRolAccessIndex);
 
-        try {
-            File file = new File(filePath);
-            Scanner scanner = new Scanner(file);
-            StringBuilder content = new StringBuilder();
-            boolean usersSection = false;
+    try {
+        File file = new File(filePath);
+        Scanner scanner = new Scanner(file);
+        StringBuilder content = new StringBuilder();
+        boolean usersSection = false;
 
-            while (scanner.hasNextLine()) {
-                String line = scanner.nextLine().trim();
-                content.append(line).append("\n");
+        while (scanner.hasNextLine()) {
+            String line = scanner.nextLine().trim();
 
-                if (line.trim().equals("- USUARIOS")) {
-                    usersSection = true;
-                } else if (usersSection && !line.trim().isEmpty() && !line.startsWith("-")) {
-                    String[] fields = line.split("\\|");
-                    if (fields.length >= 1) {
-                        try {
-                            int userId = Integer.parseInt(fields[0]);
-                            if (userId == userIdToUpdate) {
-                                // Actualizar la línea con los nuevos datos
-                                content.append(String.format("%s|%s|%s|%s|%s|%s|%s\n",
-                                        userId, newUsername, newPassword, newRolAccess, newFirstName, newLastName, newEmail));
-                            }
-                        } catch (NumberFormatException e) {
-                            System.err.println("Error al convertir el ID de usuario: " + e.getMessage());
+            if (line.trim().equals("- USUARIOS")) {
+                usersSection = true;
+            } else if (usersSection && !line.trim().isEmpty() && !line.startsWith("-")) {
+                String[] fields = line.split("\\|");
+                if (fields.length >= 1) {
+                    try {
+                        int userId = Integer.parseInt(fields[0]);
+                        if (userId == userIdToUpdate) {
+                            // Modificar la línea con los nuevos datos
+                            line = String.format("%s|%s|%s|%s|%s|%s|%s",
+                                    userId, newUsername, newPassword, newRolAccess, newFirstName, newLastName, newEmail);
+                            
+                               JOptionPane.showMessageDialog(null, "Usuario actualizado correctamente");
+              
                         }
+                    } catch (NumberFormatException e) {
+                        System.err.println("Error al convertir el ID de usuario: " + e.getMessage());
                     }
                 }
             }
-
-            // Escribir los datos actualizados en el archivo
-            FileWriter writer = new FileWriter(file);
-            writer.write(content.toString());
-            writer.close();
-
-            System.out.println("Usuario con ID " + userIdToUpdate + " actualizado correctamente.");
-        } catch (IOException e) {
-            System.err.println("Error al leer o escribir en el archivo: " + e.getMessage());
+            content.append(line).append("\n");
         }
+
+        // Escribir los datos actualizados en el archivo
+        FileWriter writer = new FileWriter(file);
+        writer.write(content.toString());
+        writer.close();
+
+        System.out.println("Usuario con ID " + userIdToUpdate + " actualizado correctamente.");
+    } catch (IOException e) {
+        System.err.println("Error al leer o escribir en el archivo: " + e.getMessage());
+    }
     
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        // TODO add your handling code here:
+    // Ruta del archivo database.txt (ajusta esto según tu ubicación)
+    String filePath = "C:\\Users\\savie\\OneDrive\\Documentos\\GitHub\\proy_contabilidad\\programa_contabilidad\\src\\contabilidad\\fomulario\\database.txt";
+
+    // ID del usuario que deseas eliminar (reemplaza con el valor correcto)
+    int userIdToDelete = Integer.parseInt(txtUserId.getText());
+
+    try {
+        File file = new File(filePath);
+        Scanner scanner = new Scanner(file);
+        StringBuilder content = new StringBuilder();
+        boolean usersSection = false;
+
+        while (scanner.hasNextLine()) {
+            String line = scanner.nextLine().trim();
+
+            if (line.trim().equals("- USUARIOS")) {
+                usersSection = true;
+            } else if (usersSection && !line.trim().isEmpty() && !line.startsWith("-")) {
+                String[] fields = line.split("\\|");
+                if (fields.length >= 1) {
+                    try {
+                        int userId = Integer.parseInt(fields[0]);
+                        if (userId == userIdToDelete) {
+                            // Si el ID del usuario coincide con el que queremos eliminar, no agregamos la línea al contenido
+                                JOptionPane.showMessageDialog(null, "Usuario eliminado correctamente");
+                                limpiarCampos();
+                            continue;
+                          
+                        }
+                      
+        
+                        
+                    } catch (NumberFormatException e) {
+                        System.err.println("Error al convertir el ID de usuario: " + e.getMessage());
+                    }
+                }
+            }
+            // Agregamos la línea al contenido (excepto si es la línea que queremos eliminar)
+            content.append(line).append("\n");
+        }
+
+        // Escribir los datos actualizados en el archivo
+        FileWriter writer = new FileWriter(file);
+        writer.write(content.toString());
+        writer.close();
+
+        System.out.println("Usuario con ID " + userIdToDelete + " eliminado correctamente.");
+    } catch (IOException e) {
+        System.err.println("Error al leer o escribir en el archivo: " + e.getMessage());
+    }
+        
+        
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnCleanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCleanActionPerformed

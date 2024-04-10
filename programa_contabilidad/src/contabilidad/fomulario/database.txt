@@ -8,32 +8,17 @@ id_puesto|nombre_puesto
 
 - USUARIOS
 1|urban|12345|1|Urbany|Castanos Cid|fulano@gmail.com
-2|savier|12345|1|Savier|Checo|fulano@gmail.com
-2|savier|12345|1|Savier Checo|Checo|fulano@gmail.com
-3|newuser|newpass|1|New|User|newuser@example.com
-4|newuser|newpass|1|New|User|newuser@example.com
-5|newuser|newpass|1|New|User|newuser@example.com
-6|newuser|newpass|1|New|User|newuser@example.com
-7|newuser|newpass|1|New|User|newuser@example.com
+4|savier|12345|0|Savier|Checo|savier@gmail.com
+5|newusers|newpass|1|New|User|newuser@example.com
 8|edwin|12345|0|Edwin|Edwin|edwin@gmail.com
-10|Jose|12345|0|Jose|Castillo|fukabo@gmail.com
-11|Juan|12345|1|Juan|Perez|JP@hotmail.com
-12|fmj|12345|0|FaUSTO|Martinbez|fmj@gmail.com
-13|qwert|qwertylkna|0|kjbnjsfd|kfgn|ed@gmail.com
-14|newuser|newpass|1|New2|User|newuser@example.com
-15|newuser|newpass|1|New3|User|newuser@example.com
 
-16|Ladron
 - EMPLEADO
-id_empleado|nombre_emp|apellido_pat_emp|apellido_mat_emp|direccion_emp|telef_emp|sexo_emp|id_depto_emp|fecha_ingreso_emp|id_puesto_emp|coop|salario_emp
 001|Urbany|Castanos|Cid|Rafey, Santiago|8097761857|hombre|001|30/01/2020|001|false|35000
 
 - NOMINA
-id_nomina|id_usuario|fecha_nomina|salario_bruto|valor_afp|valor_ars|valor_coop|valor_isr|sueldo_neto|status_nomina
 001|001|15/04|35000|2.87|3.04|15|32962.03|true
 
 - COOPERATIVA
-id_empleado|porcentaje_desc|balance_acum
 001|15|10000
 
 
