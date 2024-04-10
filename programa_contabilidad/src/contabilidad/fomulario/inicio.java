@@ -21,8 +21,10 @@ public class inicio extends javax.swing.JFrame {
         initComponents();
         if(AccessRol==0){
               procesosMenuItem.setVisible(true);
+              userItem.setVisible(true);
         }else{
             procesosMenuItem.setVisible(false);
+             userItem.setVisible(false);
         } 
     }
 
@@ -45,7 +47,7 @@ public class inicio extends javax.swing.JFrame {
         jMenu6 = new javax.swing.JMenu();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        userItem = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
@@ -83,15 +85,25 @@ public class inicio extends javax.swing.JFrame {
         jMenu1.setText("Mantenimientos");
         jMenu1.setDoubleBuffered(true);
 
-        jMenuItem2.setText("Usuario");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        userItem.setText("Usuario");
+        userItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
+                userItemActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem2);
+        jMenu1.add(userItem);
 
         jMenuItem3.setText("Departamento");
+        jMenuItem3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenuItem3MouseClicked(evt);
+            }
+        });
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem3);
 
         jMenuItem4.setText("Puesto");
@@ -159,14 +171,23 @@ public class inicio extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+    private void userItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userItemActionPerformed
        usuario usr = new usuario();
        usr.setVisible(true);
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
+    }//GEN-LAST:event_userItemActionPerformed
 
     private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem8ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        departamento dpto = new departamento();
+        dpto.setVisible(true);
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem3MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem3MouseClicked
 
     /**
      * @param args the command line arguments
@@ -219,7 +240,6 @@ public class inicio extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem13;
     private javax.swing.JMenuItem jMenuItem14;
-    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
@@ -229,5 +249,6 @@ public class inicio extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JMenu procesosMenuItem;
+    private javax.swing.JMenuItem userItem;
     // End of variables declaration//GEN-END:variables
 }

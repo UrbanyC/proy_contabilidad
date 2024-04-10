@@ -18,14 +18,14 @@ import java.util.ArrayList;
  *
  * @author savie
  */
-public class usuario extends javax.swing.JFrame {
+public class departamento extends javax.swing.JFrame {
 
     /**
      * Creates new form usuario
      */
     
     private DefaultTableModel tableModel;
-    public usuario() {
+    public departamento() {
         initComponents();
         cargarListado();
     }
@@ -35,7 +35,7 @@ public class usuario extends javax.swing.JFrame {
     private void cargarListado() {
         ArrayList<String[]> datosUsuarios = leerDatosUsuariosDesdeArchivo();
 
-        String[] columnas = {"ID", "Usuario","Contrasena","Nivel Acceso", "Nombre", "Apellidos", "Email"};
+        String[] columnas = {"ID", "Descripcion"};
         tableModel = new DefaultTableModel(columnas, 0);
 
         for (String[] fila : datosUsuarios) {
@@ -53,7 +53,7 @@ public class usuario extends javax.swing.JFrame {
             
 
             while ((linea = br.readLine()) != null) {
-                if (linea.trim().equals("- USUARIOS")) {
+                if (linea.trim().equals("- DEPARTAMENTO")) {
                     esTablaUsuarios = true;
                 } else if (esTablaUsuarios && !linea.trim().isEmpty()) {
                     if(linea.startsWith("-")) {
@@ -76,14 +76,9 @@ public class usuario extends javax.swing.JFrame {
            btnDelete.setVisible(false);
            btnClean.setVisible(true);
            btnSave.setVisible(true);
-           txtUserId.setEnabled(true);
-           txtUserId.setText("");
-           txtUser.setText("");
-           txtPassword.setText("");
-           txtName.setText("");
-           txtLastName.setText("");
-           txtEmail.setText("");
-           cBoxAccess.setSelectedIndex(0);
+           deptoid.setEnabled(true);
+           deptoid.setText("");
+           deptodesc.setText("");
            formularioTabs.setSelectedIndex(1);
     }
         
@@ -103,20 +98,10 @@ public class usuario extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tablaUsuarios = new javax.swing.JTable();
         jLayeredPane1 = new javax.swing.JLayeredPane();
-        cBoxAccess = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        txtPassword = new javax.swing.JPasswordField();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        txtUser = new javax.swing.JTextField();
-        txtLastName = new javax.swing.JTextField();
-        txtEmail = new javax.swing.JTextField();
-        txtName = new javax.swing.JTextField();
+        deptodesc = new javax.swing.JTextField();
         btnSave = new javax.swing.JButton();
-        txtUserId = new javax.swing.JTextField();
+        deptoid = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         btnEdit = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
@@ -126,7 +111,7 @@ public class usuario extends javax.swing.JFrame {
         setTitle("Formulario de usuario");
 
         jLabel1.setFont(new java.awt.Font("Century Gothic", 1, 24)); // NOI18N
-        jLabel1.setText("Usuario");
+        jLabel1.setText("Departamentos");
 
         formularioTabs.setBackground(new java.awt.Color(255, 255, 255));
         formularioTabs.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -141,7 +126,7 @@ public class usuario extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Id", "Usuario", "Nivel Acceso", "Nombre", "Apellido", "Correo"
+                "Id", "Descripcion"
             }
         ));
         tablaUsuarios.setColumnSelectionAllowed(true);
@@ -180,46 +165,11 @@ public class usuario extends javax.swing.JFrame {
 
         formularioTabs.addTab("Listado", jPanel1);
 
-        cBoxAccess.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Administrador", "Usuario" }));
-        cBoxAccess.addActionListener(new java.awt.event.ActionListener() {
+        jLabel2.setText("Descripcion");
+
+        deptodesc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cBoxAccessActionPerformed(evt);
-            }
-        });
-
-        jLabel2.setText("Usuario");
-
-        jLabel3.setText("Contraseña");
-
-        jLabel4.setText("Nombre ");
-
-        jLabel5.setText("Nivel Acceso");
-
-        jLabel6.setText("Apellidos");
-
-        jLabel7.setText("Correo");
-
-        txtUser.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtUserActionPerformed(evt);
-            }
-        });
-
-        txtLastName.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtLastNameActionPerformed(evt);
-            }
-        });
-
-        txtEmail.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtEmailActionPerformed(evt);
-            }
-        });
-
-        txtName.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNameActionPerformed(evt);
+                deptodescActionPerformed(evt);
             }
         });
 
@@ -230,9 +180,9 @@ public class usuario extends javax.swing.JFrame {
             }
         });
 
-        txtUserId.addActionListener(new java.awt.event.ActionListener() {
+        deptoid.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtUserIdActionPerformed(evt);
+                deptoidActionPerformed(evt);
             }
         });
 
@@ -266,20 +216,10 @@ public class usuario extends javax.swing.JFrame {
             }
         });
 
-        jLayeredPane1.setLayer(cBoxAccess, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(jLabel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(jLabel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(txtPassword, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(jLabel4, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(jLabel5, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(jLabel6, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(jLabel7, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(txtUser, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(txtLastName, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(txtEmail, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(txtName, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(deptodesc, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(btnSave, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        jLayeredPane1.setLayer(txtUserId, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane1.setLayer(deptoid, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(jLabel8, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(btnEdit, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane1.setLayer(btnDelete, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -293,30 +233,6 @@ public class usuario extends javax.swing.JFrame {
             .addGroup(jLayeredPane1Layout.createSequentialGroup()
                 .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jLayeredPane1Layout.createSequentialGroup()
-                        .addGap(83, 83, 83)
-                        .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel8))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtUserId, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(txtPassword)
-                                .addComponent(cBoxAccess, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txtUser, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(71, 71, 71)
-                        .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtName, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtLastName, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jLayeredPane1Layout.createSequentialGroup()
                         .addGap(52, 52, 52)
                         .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -326,35 +242,30 @@ public class usuario extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnClean, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnExit, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jLayeredPane1Layout.createSequentialGroup()
+                        .addGap(118, 118, 118)
+                        .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel8))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(deptodesc, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(deptoid, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(47, Short.MAX_VALUE))
         );
         jLayeredPane1Layout.setVerticalGroup(
             jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jLayeredPane1Layout.createSequentialGroup()
-                .addGap(40, 40, 40)
+                .addGap(109, 109, 109)
                 .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtUserId, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(deptoid, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8))
-                .addGap(25, 25, 25)
+                .addGap(45, 45, 45)
                 .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(txtUser, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4)
-                    .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(25, 25, 25)
-                .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel6)
-                    .addComponent(txtLastName, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(23, 23, 23)
-                .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(cBoxAccess, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
+                    .addComponent(deptodesc, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 114, Short.MAX_VALUE)
                 .addGroup(jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -394,66 +305,121 @@ public class usuario extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUserActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtUserActionPerformed
+    private void tablaUsuariosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tablaUsuariosKeyPressed
+      
+    }//GEN-LAST:event_tablaUsuariosKeyPressed
 
-    private void txtLastNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtLastNameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtLastNameActionPerformed
+    private void tablaUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaUsuariosMouseClicked
+       
+         
+         DefaultTableModel tm = (DefaultTableModel) tablaUsuarios.getModel();
+         
+         String dato = String.valueOf(tm.getValueAt(tablaUsuarios.getSelectedRow(), 0));
+         
+           btnEdit.setVisible(true);
+           btnDelete.setVisible(true);
+           btnClean.setVisible(false);
+           btnSave.setVisible(false);
+           deptoid.setEnabled(false);
+           
+           deptoid.setText(String.valueOf(tm.getValueAt(tablaUsuarios.getSelectedRow(), 0)));
+           deptodesc.setText(String.valueOf(tm.getValueAt(tablaUsuarios.getSelectedRow(), 1)));
+           formularioTabs.setSelectedIndex(1);
+         
+    }//GEN-LAST:event_tablaUsuariosMouseClicked
 
-    private void txtEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmailActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtEmailActionPerformed
+    private void formularioTabsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formularioTabsMouseClicked
+        if(formularioTabs.getSelectedIndex()==0){
+            cargarListado();
+        }
+        
+        if( formularioTabs.getSelectedIndex()==1){
+          limpiarCampos();
+        
+        }
+    }//GEN-LAST:event_formularioTabsMouseClicked
 
-    private void txtNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNameActionPerformed
+    private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
+        this.setVisible(false);        // TODO add your handling code here:
+    }//GEN-LAST:event_btnExitActionPerformed
 
-    private void cBoxAccessActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cBoxAccessActionPerformed
+    private void btnCleanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCleanActionPerformed
+        limpiarCampos();        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCleanActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_cBoxAccessActionPerformed
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
+        // Ruta del archivo database.txt (ajusta esto según tu ubicación)
+        String filePath = "C:\\Users\\savie\\OneDrive\\Documentos\\GitHub\\proy_contabilidad\\programa_contabilidad\\src\\contabilidad\\fomulario\\database.txt";
+
+        // ID del usuario que deseas actualizar (reemplaza con el valor correcto)
+        int userIdToUpdate =  Integer.parseInt(deptoid.getText());
+
+        String newdeptoid = deptoid.getText();
+        String newdeptodesc = deptodesc.getText();
+
+        try {
+            File file = new File(filePath);
+            Scanner scanner = new Scanner(file);
+            StringBuilder content = new StringBuilder();
+            boolean usersSection = false;
+
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine().trim();
+                content.append(line).append("\n");
+
+                if (line.trim().equals("- DEPARTAMENTO")) {
+                    usersSection = true;
+                } else if (usersSection && !line.trim().isEmpty() && !line.startsWith("-")) {
+                    String[] fields = line.split("\\|");
+                    if (fields.length >= 1) {
+                        try {
+                            int userId = Integer.parseInt(fields[0]);
+                            if (userId == userIdToUpdate) {
+                                // Actualizar la línea con los nuevos datos
+                                content.append(String.format("%s|%s\n", newdeptoid, newdeptodesc,));
+                        }
+                    } catch (NumberFormatException e) {
+                        System.err.println("Error al convertir el ID de usuario: " + e.getMessage());
+                    }
+                }
+            }
+        }
+
+        // Escribir los datos actualizados en el archivo
+        FileWriter writer = new FileWriter(file);
+        writer.write(content.toString());
+        writer.close();
+
+        System.out.println("Usuario con ID " + userIdToUpdate + " actualizado correctamente.");
+        } catch (IOException e) {
+            System.err.println("Error al leer o escribir en el archivo: " + e.getMessage());
+        }
+
+    }//GEN-LAST:event_btnEditActionPerformed
+
+    private void deptoidActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deptoidActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_deptoidActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-   
-             String username = txtUser.getText();
-        if (!username.matches("[A-Za-z0-9]+")) {
-           JOptionPane.showMessageDialog(null, "EL usuario inválido");
-           return;
-        } 
-        
-             String password = txtPassword.getText();
-        if (password.length() < 5) {
-            JOptionPane.showMessageDialog(null, "Contraseña debe tener al menos 5 caracteres");
+
+        String deptoids = deptoid.getText();
+        if (!deptoids.matches("[0-9]+")) {
+            JOptionPane.showMessageDialog(null, "El id debe ser numerico");
             return;
         }
-       
-        
-             String firstName = txtName.getText();
-        if (!firstName.matches("[A-Za-z]+")) {
-             JOptionPane.showMessageDialog(null, "El nombre es inválido");
+
+        String deptodescs = deptodesc.getText();
+        if (deptodescs.length() > 30) {
+            JOptionPane.showMessageDialog(null, "La descripcion debe tener un maximo de 30 caracteres");
             return;
         }
-   
-         
-             String lastName = txtLastName.getText();
-        if (!lastName.matches("[A-Za-z]+")) {
-             JOptionPane.showMessageDialog(null, "El apellido es inválido");
-            return;
-         }
-           
-        
-              String email = txtEmail.getText();
-         if (!email.matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
-             JOptionPane.showMessageDialog(null, "El correo es inválido");
-            return;
-         }
-        
-        
-        int RolAccessIndex =  cBoxAccess.getSelectedIndex();
-        String RolAccess = String.valueOf(RolAccessIndex);
-        
-      File file = new File("C:\\Users\\savie\\OneDrive\\Documentos\\GitHub\\proy_contabilidad\\programa_contabilidad\\src\\contabilidad\\fomulario\\database.txt");
+
+        File file = new File("C:\\Users\\savie\\OneDrive\\Documentos\\GitHub\\proy_contabilidad\\programa_contabilidad\\src\\contabilidad\\fomulario\\database.txt");
         try {
             Scanner scanner = new Scanner(file);
             StringBuilder content = new StringBuilder();
@@ -464,7 +430,7 @@ public class usuario extends javax.swing.JFrame {
                 String line = scanner.nextLine().trim();
                 content.append(line).append("\n");
 
-                if (line.trim().equals("- USUARIOS")) {
+                if (line.trim().equals("- DEPARTAMENTO")) {
                     usersSection = true;
                 } else if (usersSection && !line.trim().isEmpty() && !line.startsWith("-")) {
                     String[] fields = line.split("\\|");
@@ -485,10 +451,10 @@ public class usuario extends javax.swing.JFrame {
             String userIdAsString = String.valueOf(newUserId);
 
             // Crear la nueva entrada de usuario (reemplaza con los valores reales)
-            String newUserEntry = String.format("%s"+"|"+txtUser.getText()+"|"+txtPassword.getText()+"|"+RolAccess+"|"+txtName.getText()+"|"+txtLastName.getText()+"|"+txtEmail.getText()+"\n", userIdAsString);
+            String newUserEntry = String.format(deptoid.getText()+"|"+deptodesc.getText()+"\n", userIdAsString);
 
             // Insertar la nueva entrada después del último registro de usuarios
-            int usersIndex = content.indexOf("- USUARIOS");
+            int usersIndex = content.indexOf("- DEPARTAMENTO");
             int usersEndIndex = content.indexOf("- ", usersIndex + 1);
             content.insert(usersEndIndex, newUserEntry);
 
@@ -497,129 +463,22 @@ public class usuario extends javax.swing.JFrame {
             writer.write(content.toString());
             writer.close();
 
-            System.out.println("Nuevo usuario con ID " + userIdAsString + " ha sido agregado a la sección USUARIOS en 'database.txt'.");
-              JOptionPane.showMessageDialog(null, "Usuario creado correctamente");
-              
-              txtUser.setText("");
-              txtPassword.setText("");
+            System.out.println("Nuevo departamento con ID " + userIdAsString + " ha sido agregado a la sección Departamentos en 'database.txt'.");
+            JOptionPane.showMessageDialog(null, "Departamento creado correctamente");
+
+            deptodesc.setText("");
+            deptoid.setText("");
         } catch (FileNotFoundException e) {
             System.err.println("Error: El archivo 'database.txt' no se encontró.");
         } catch (IOException e) {
             System.err.println("Error al escribir en el archivo 'database.txt'.");
         }
-    
+
     }//GEN-LAST:event_btnSaveActionPerformed
 
-    private void tablaUsuariosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tablaUsuariosKeyPressed
-      
-    }//GEN-LAST:event_tablaUsuariosKeyPressed
-
-    private void tablaUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaUsuariosMouseClicked
-       
-         
-         DefaultTableModel tm = (DefaultTableModel) tablaUsuarios.getModel();
-         
-         String dato = String.valueOf(tm.getValueAt(tablaUsuarios.getSelectedRow(), 0));
-         
-           btnEdit.setVisible(true);
-           btnDelete.setVisible(true);
-           btnClean.setVisible(false);
-           btnSave.setVisible(false);
-           txtUserId.setEnabled(false);
-           
-           txtUserId.setText(String.valueOf(tm.getValueAt(tablaUsuarios.getSelectedRow(), 0)));
-           txtUser.setText(String.valueOf(tm.getValueAt(tablaUsuarios.getSelectedRow(), 1)));
-           txtPassword.setText(String.valueOf(tm.getValueAt(tablaUsuarios.getSelectedRow(), 2)));
-           txtName.setText(String.valueOf(tm.getValueAt(tablaUsuarios.getSelectedRow(), 4)));
-           txtLastName.setText(String.valueOf(tm.getValueAt(tablaUsuarios.getSelectedRow(), 5)));
-           txtEmail.setText(String.valueOf(tm.getValueAt(tablaUsuarios.getSelectedRow(), 6)));
-           cBoxAccess.setSelectedIndex(Integer.parseInt( String.valueOf(tm.getValueAt(tablaUsuarios.getSelectedRow(), 3))));
-           formularioTabs.setSelectedIndex(1);
-         
-    }//GEN-LAST:event_tablaUsuariosMouseClicked
-
-    private void txtUserIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUserIdActionPerformed
+    private void deptodescActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deptodescActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtUserIdActionPerformed
-
-    private void formularioTabsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formularioTabsMouseClicked
-        if(formularioTabs.getSelectedIndex()==0){
-            cargarListado();
-        }
-        
-        if( formularioTabs.getSelectedIndex()==1){
-          limpiarCampos();
-        
-        }
-    }//GEN-LAST:event_formularioTabsMouseClicked
-
-    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
-     // Ruta del archivo database.txt (ajusta esto según tu ubicación)
-        String filePath = "C:\\Users\\savie\\OneDrive\\Documentos\\GitHub\\proy_contabilidad\\programa_contabilidad\\src\\contabilidad\\fomulario\\database.txt";
-
-        // ID del usuario que deseas actualizar (reemplaza con el valor correcto)
-        int userIdToUpdate =  Integer.parseInt(txtUserId.getText());
-
-        String newUsername = txtUser.getText();
-        String newPassword = txtPassword.getText();
-        String newFirstName = txtName.getText();
-        String newLastName = txtLastName.getText();
-        String newEmail = txtEmail.getText();
-        int newRolAccessIndex = cBoxAccess.getSelectedIndex();
-        String newRolAccess = String.valueOf(newRolAccessIndex);
-
-        try {
-            File file = new File(filePath);
-            Scanner scanner = new Scanner(file);
-            StringBuilder content = new StringBuilder();
-            boolean usersSection = false;
-
-            while (scanner.hasNextLine()) {
-                String line = scanner.nextLine().trim();
-                content.append(line).append("\n");
-
-                if (line.trim().equals("- USUARIOS")) {
-                    usersSection = true;
-                } else if (usersSection && !line.trim().isEmpty() && !line.startsWith("-")) {
-                    String[] fields = line.split("\\|");
-                    if (fields.length >= 1) {
-                        try {
-                            int userId = Integer.parseInt(fields[0]);
-                            if (userId == userIdToUpdate) {
-                                // Actualizar la línea con los nuevos datos
-                                content.append(String.format("%s|%s|%s|%s|%s|%s|%s\n",
-                                        userId, newUsername, newPassword, newRolAccess, newFirstName, newLastName, newEmail));
-                            }
-                        } catch (NumberFormatException e) {
-                            System.err.println("Error al convertir el ID de usuario: " + e.getMessage());
-                        }
-                    }
-                }
-            }
-
-            // Escribir los datos actualizados en el archivo
-            FileWriter writer = new FileWriter(file);
-            writer.write(content.toString());
-            writer.close();
-
-            System.out.println("Usuario con ID " + userIdToUpdate + " actualizado correctamente.");
-        } catch (IOException e) {
-            System.err.println("Error al leer o escribir en el archivo: " + e.getMessage());
-        }
-    
-    }//GEN-LAST:event_btnEditActionPerformed
-
-    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnDeleteActionPerformed
-
-    private void btnCleanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCleanActionPerformed
-        limpiarCampos();        // TODO add your handling code here:
-    }//GEN-LAST:event_btnCleanActionPerformed
-
-    private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
-        this.setVisible(false);        // TODO add your handling code here:
-    }//GEN-LAST:event_btnExitActionPerformed
+    }//GEN-LAST:event_deptodescActionPerformed
 
     /**
      * @param args the command line arguments
@@ -638,20 +497,21 @@ public class usuario extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(usuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(departamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(usuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(departamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(usuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(departamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(usuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(departamento.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new usuario().setVisible(true);
+                new departamento().setVisible(true);
             }
         });
     }
@@ -662,25 +522,15 @@ public class usuario extends javax.swing.JFrame {
     private javax.swing.JButton btnEdit;
     private javax.swing.JButton btnExit;
     private javax.swing.JButton btnSave;
-    private javax.swing.JComboBox<String> cBoxAccess;
+    private javax.swing.JTextField deptodesc;
+    private javax.swing.JTextField deptoid;
     private javax.swing.JTabbedPane formularioTabs;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tablaUsuarios;
-    private javax.swing.JTextField txtEmail;
-    private javax.swing.JTextField txtLastName;
-    private javax.swing.JTextField txtName;
-    private javax.swing.JPasswordField txtPassword;
-    private javax.swing.JTextField txtUser;
-    private javax.swing.JTextField txtUserId;
     // End of variables declaration//GEN-END:variables
 }
