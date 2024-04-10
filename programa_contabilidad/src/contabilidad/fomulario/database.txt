@@ -1,24 +1,16 @@
 - DEPARTAMENTO
-001|Contabilidad
-002|Recursos Humanos
+2|Recursos Humanos
 
 - PUESTOS
 id_puesto|nombre_puesto
-001|Gerente
 
 - USUARIOS
-1|urban|12345|1|Urbany|Castanos Cid|fulano@gmail.com
 4|savier|12345|0|Savier|Checo|savier@gmail.com
 5|newusers|newpass|1|New|User|newuser@example.com
 8|edwin|12345|0|Edwin|Edwin|edwin@gmail.com
 
 - EMPLEADO
-001|Urbany|Castanos|Cid|Rafey, Santiago|8097761857|hombre|001|30/01/2020|001|false|35000
 
 - NOMINA
-001|001|15/04|35000|2.87|3.04|15|32962.03|true
 
 - COOPERATIVA
-001|15|10000
-
-

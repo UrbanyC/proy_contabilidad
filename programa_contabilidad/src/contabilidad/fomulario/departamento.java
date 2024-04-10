@@ -348,7 +348,52 @@ public class departamento extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCleanActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
-        // TODO add your handling code here:
+       // Ruta del archivo database.txt (ajusta esto según tu ubicación)
+    String filePath = "C:\\Users\\savie\\OneDrive\\Documentos\\GitHub\\proy_contabilidad\\programa_contabilidad\\src\\contabilidad\\fomulario\\database.txt";
+
+    // ID del departamento que deseas eliminar (reemplaza con el valor correcto)
+    int departmentIdToDelete = Integer.parseInt(deptoid.getText());
+
+    try {
+        File file = new File(filePath);
+        Scanner scanner = new Scanner(file);
+        StringBuilder content = new StringBuilder();
+        boolean departmentsSection = false;
+
+        while (scanner.hasNextLine()) {
+            String line = scanner.nextLine().trim();
+
+            if (line.trim().equals("- DEPARTAMENTO")) {
+                departmentsSection = true;
+            } else if (departmentsSection && !line.trim().isEmpty() && !line.startsWith("-")) {
+                String[] fields = line.split("\\|");
+                if (fields.length >= 1) {
+                    try {
+                        int deptId = Integer.parseInt(fields[0]);
+                        if (deptId == departmentIdToDelete) {
+                            // Si el ID del departamento coincide con el que queremos eliminar, no agregamos la línea al contenido
+                            JOptionPane.showMessageDialog(null, "Departamento eliminado correctamente");
+                            limpiarCampos();
+                            continue;
+                        }
+                    } catch (NumberFormatException e) {
+                        System.err.println("Error al convertir el ID de departamento: " + e.getMessage());
+                    }
+                }
+            }
+            // Agregamos la línea al contenido (excepto si es la línea que queremos eliminar)
+            content.append(line).append("\n");
+        }
+
+        // Escribir los datos actualizados en el archivo
+        FileWriter writer = new FileWriter(file);
+        writer.write(content.toString());
+        writer.close();
+
+        System.out.println("Departamento con ID " + departmentIdToDelete + " eliminado correctamente.");
+    } catch (IOException e) {
+        System.err.println("Error al leer o escribir en el archivo: " + e.getMessage());
+    }
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
@@ -407,72 +452,85 @@ public class departamento extends javax.swing.JFrame {
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
 
-        String deptoids = deptoid.getText();
-        if (!deptoids.matches("[0-9]+")) {
-            JOptionPane.showMessageDialog(null, "El id debe ser numerico");
-            return;
-        }
+    String departmentIdInput = deptoid.getText();
+    if (!departmentIdInput.matches("[0-9]+")) {
+        JOptionPane.showMessageDialog(null, "El ID debe ser numérico");
+        return;
+    }
+    
+    String departmentDescInput = deptodesc.getText();
+    if (departmentDescInput.length() > 30) {
+        JOptionPane.showMessageDialog(null, "La descripción debe tener un máximo de 30 caracteres");
+        return;
+    }
 
-        String deptodescs = deptodesc.getText();
-        if (deptodescs.length() > 30) {
-            JOptionPane.showMessageDialog(null, "La descripcion debe tener un maximo de 30 caracteres");
-            return;
-        }
+    File file = new File("C:\\Users\\savie\\OneDrive\\Documentos\\GitHub\\proy_contabilidad\\programa_contabilidad\\src\\contabilidad\\fomulario\\database.txt");
+    try {
+        Scanner scanner = new Scanner(file);
+        boolean deptExists = false;
 
-        File file = new File("C:\\Users\\savie\\OneDrive\\Documentos\\GitHub\\proy_contabilidad\\programa_contabilidad\\src\\contabilidad\\fomulario\\database.txt");
-        try {
-            Scanner scanner = new Scanner(file);
-            StringBuilder content = new StringBuilder();
-            boolean usersSection = false;
-            int lastUserId = 0;
-
-            while (scanner.hasNextLine()) {
-                String line = scanner.nextLine().trim();
-                content.append(line).append("\n");
-
-                if (line.trim().equals("- DEPARTAMENTO")) {
-                    usersSection = true;
-                } else if (usersSection && !line.trim().isEmpty() && !line.startsWith("-")) {
-                    String[] fields = line.split("\\|");
-                    if (fields.length >= 1) {
-                        try {
-                            int userId = Integer.parseInt(fields[0]);
-                            lastUserId = Math.max(lastUserId, userId);
-                        } catch (NumberFormatException e) {
-                            // Manejar errores de conversión (por ejemplo, si el ID no es un número válido)
-                            System.err.println("Error al convertir el ID de usuario: " + e.getMessage());
-                        }
+        // Iterar sobre el archivo para buscar el ID del departamento en la sección "DEPARTAMENTO"
+        while (scanner.hasNextLine()) {
+            String line = scanner.nextLine().trim();
+            if (line.equals("- DEPARTAMENTO")) {
+                // Entramos en la sección de departamentos, comenzamos a buscar el ID
+                while (scanner.hasNextLine()) {
+                    String deptLine = scanner.nextLine().trim();
+                    if (deptLine.startsWith(departmentIdInput + "|")) {
+                        // Si se encuentra un ID igual, mostrar mensaje y salir del bucle
+                        deptExists = true;
+                        break;
+                    } else if (deptLine.startsWith("-")) {
+                        // Hemos alcanzado el final de la sección de departamentos
+                        break;
                     }
                 }
+                break; // Salir del bucle principal
             }
-
-            // Generar el nuevo ID de usuario
-            int newUserId = lastUserId + 1;
-            String userIdAsString = String.valueOf(newUserId);
-
-            // Crear la nueva entrada de usuario (reemplaza con los valores reales)
-            String newUserEntry = String.format(deptoid.getText()+"|"+deptodesc.getText()+"\n", userIdAsString);
-
-            // Insertar la nueva entrada después del último registro de usuarios
-            int usersIndex = content.indexOf("- DEPARTAMENTO");
-            int usersEndIndex = content.indexOf("- ", usersIndex + 1);
-            content.insert(usersEndIndex, newUserEntry);
-
-            // Escribir los datos actualizados en el archivo
-            FileWriter writer = new FileWriter(file);
-            writer.write(content.toString());
-            writer.close();
-
-            System.out.println("Nuevo departamento con ID " + userIdAsString + " ha sido agregado a la sección Departamentos en 'database.txt'.");
-            JOptionPane.showMessageDialog(null, "Departamento creado correctamente");
-
-            deptodesc.setText("");
-            deptoid.setText("");
-        } catch (FileNotFoundException e) {
-            System.err.println("Error: El archivo 'database.txt' no se encontró.");
-        } catch (IOException e) {
-            System.err.println("Error al escribir en el archivo 'database.txt'.");
         }
+
+        // Si el departamento ya existe, mostrar mensaje y salir del método
+        if (deptExists) {
+            JOptionPane.showMessageDialog(null, "Ya existe un departamento con el mismo ID.");
+            return;
+        }
+
+        // Construir la nueva entrada del departamento
+        String newDepartmentEntry = departmentIdInput + "|" + departmentDescInput + "\n";
+
+        // Encontrar la posición donde insertar el nuevo registro
+        StringBuilder content = new StringBuilder();
+        boolean departmentsSection = false;
+        scanner = new Scanner(file);
+        while (scanner.hasNextLine()) {
+            String line = scanner.nextLine().trim();
+            content.append(line).append("\n");
+
+            if (line.trim().equals("- DEPARTAMENTO")) {
+                departmentsSection = true;
+            } else if (departmentsSection && !line.trim().isEmpty() && !line.startsWith("-")) {
+                // Insertar el nuevo registro después de la sección de departamentos
+                content.append(newDepartmentEntry);
+                departmentsSection = false; // Evitar duplicar la inserción
+            }
+        }
+
+        // Escribir los datos actualizados en el archivo
+        FileWriter writer = new FileWriter(file);
+        writer.write(content.toString());
+        writer.close();
+
+        System.out.println("Nuevo departamento con ID " + departmentIdInput + " ha sido agregado a la sección Departamentos en 'database.txt'.");
+        JOptionPane.showMessageDialog(null, "Departamento creado correctamente");
+
+        // Limpiar los campos de entrada
+        deptodesc.setText("");
+        deptoid.setText("");
+    } catch (FileNotFoundException e) {
+        System.err.println("Error: El archivo 'database.txt' no se encontró.");
+    } catch (IOException e) {
+        System.err.println("Error al escribir en el archivo 'database.txt'.");
+    }
 
     }//GEN-LAST:event_btnSaveActionPerformed
 
