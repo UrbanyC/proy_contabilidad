@@ -1,16 +1,18 @@
 - DEPARTAMENTO
 2|Recursos Humanos
-
+1|Herreria
+3|Mantenimiento
+5|Contabilidad Gleidy
 - PUESTOS
-id_puesto|nombre_puesto
+1|Gerente
 
 - USUARIOS
-4|savier|12345|0|Savier|Checo|savier@gmail.com
-5|newusers|newpass|1|New|User|newuser@example.com
-8|edwin|12345|0|Edwin|Edwin|edwin@gmail.com
-
+1|admin|12345|0|Savier|Checo|saviercheco@gmail.com
+2|user|12345|1|Urbany|Castanos|urbanycastanos@gmail.com
 - EMPLEADO
 
 - NOMINA
 
 - COOPERATIVA
+
+

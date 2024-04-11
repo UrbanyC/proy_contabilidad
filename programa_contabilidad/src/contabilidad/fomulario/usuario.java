@@ -5,6 +5,7 @@
  */
 package contabilidad.fomulario;
 
+import static contabilidad.fomulario.login.archivo_patch;
 import javax.swing.JOptionPane;
 import java.io.*;
 import java.util.Scanner;
@@ -47,7 +48,7 @@ public class usuario extends javax.swing.JFrame {
 
     private ArrayList<String[]> leerDatosUsuariosDesdeArchivo() {
         ArrayList<String[]> datosUsuarios = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\savie\\OneDrive\\Documentos\\GitHub\\proy_contabilidad\\programa_contabilidad\\src\\contabilidad\\fomulario\\database.txt"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(archivo_patch))) {
             String linea;
             boolean esTablaUsuarios = false;
             
@@ -453,7 +454,7 @@ public class usuario extends javax.swing.JFrame {
         int RolAccessIndex =  cBoxAccess.getSelectedIndex();
         String RolAccess = String.valueOf(RolAccessIndex);
         
-      File file = new File("C:\\Users\\savie\\OneDrive\\Documentos\\GitHub\\proy_contabilidad\\programa_contabilidad\\src\\contabilidad\\fomulario\\database.txt");
+      File file = new File(archivo_patch);
         try {
             Scanner scanner = new Scanner(file);
             StringBuilder content = new StringBuilder();
@@ -555,7 +556,7 @@ public class usuario extends javax.swing.JFrame {
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
      // Ruta del archivo database.txt (ajusta esto según tu ubicación)
-    String filePath = "C:\\Users\\savie\\OneDrive\\Documentos\\GitHub\\proy_contabilidad\\programa_contabilidad\\src\\contabilidad\\fomulario\\database.txt";
+    String filePath = archivo_patch;
 
     // ID del usuario que deseas actualizar (reemplaza con el valor correcto)
     int userIdToUpdate =  Integer.parseInt(txtUserId.getText());
@@ -614,7 +615,7 @@ public class usuario extends javax.swing.JFrame {
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
     // Ruta del archivo database.txt (ajusta esto según tu ubicación)
-    String filePath = "C:\\Users\\savie\\OneDrive\\Documentos\\GitHub\\proy_contabilidad\\programa_contabilidad\\src\\contabilidad\\fomulario\\database.txt";
+    String filePath = archivo_patch;
 
     // ID del usuario que deseas eliminar (reemplaza con el valor correcto)
     int userIdToDelete = Integer.parseInt(txtUserId.getText());
@@ -640,7 +641,6 @@ public class usuario extends javax.swing.JFrame {
                                 JOptionPane.showMessageDialog(null, "Usuario eliminado correctamente");
                                 limpiarCampos();
                             continue;
-                          
                         }
                       
         

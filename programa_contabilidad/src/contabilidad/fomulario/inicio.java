@@ -21,10 +21,10 @@ public class inicio extends javax.swing.JFrame {
         initComponents();
         if(AccessRol==0){
               procesosMenuItem.setVisible(true);
-              userItem.setVisible(true);
+              jMenu1.setVisible(true);
         }else{
             procesosMenuItem.setVisible(false);
-             userItem.setVisible(false);
+             jMenu1 .setVisible(false);
         } 
     }
 
@@ -107,6 +107,20 @@ public class inicio extends javax.swing.JFrame {
         jMenu1.add(jMenuItem3);
 
         jMenuItem4.setText("Puesto");
+        jMenuItem4.addMenuKeyListener(new javax.swing.event.MenuKeyListener() {
+            public void menuKeyPressed(javax.swing.event.MenuKeyEvent evt) {
+                jMenuItem4MenuKeyPressed(evt);
+            }
+            public void menuKeyReleased(javax.swing.event.MenuKeyEvent evt) {
+            }
+            public void menuKeyTyped(javax.swing.event.MenuKeyEvent evt) {
+            }
+        });
+        jMenuItem4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jMenuItem4MouseReleased(evt);
+            }
+        });
         jMenu1.add(jMenuItem4);
 
         jMenuItem5.setText("Empleados");
@@ -189,6 +203,14 @@ public class inicio extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem3MouseClicked
 
+    private void jMenuItem4MenuKeyPressed(javax.swing.event.MenuKeyEvent evt) {//GEN-FIRST:event_jMenuItem4MenuKeyPressed
+
+    }//GEN-LAST:event_jMenuItem4MenuKeyPressed
+
+    private void jMenuItem4MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem4MouseReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem4MouseReleased
+
     /**
      * @param args the command line arguments
      */
@@ -219,7 +241,7 @@ public class inicio extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new inicio().setVisible(true);
+                //new inicio().setVisible(true);
             }
         });
     }

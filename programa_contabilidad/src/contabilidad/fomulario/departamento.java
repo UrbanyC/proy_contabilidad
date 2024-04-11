@@ -5,6 +5,7 @@
  */
 package contabilidad.fomulario;
 
+import static contabilidad.fomulario.login.archivo_patch;
 import javax.swing.JOptionPane;
 import java.io.*;
 import java.util.Scanner;
@@ -14,15 +15,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-/**
- *
- * @author savie
- */
 public class departamento extends javax.swing.JFrame {
 
-    /**
-     * Creates new form usuario
-     */
     
     private DefaultTableModel tableModel;
     public departamento() {
@@ -30,24 +24,22 @@ public class departamento extends javax.swing.JFrame {
         cargarListado();
     }
     
-    
-
     private void cargarListado() {
-        ArrayList<String[]> datosUsuarios = leerDatosUsuariosDesdeArchivo();
+        ArrayList<String[]> datosDepartamentos = leerdatosDepartamentosDesdeArchivo();
 
         String[] columnas = {"ID", "Descripcion"};
         tableModel = new DefaultTableModel(columnas, 0);
 
-        for (String[] fila : datosUsuarios) {
+        for (String[] fila : datosDepartamentos) {
             tableModel.addRow(fila);
         }
 
         tablaUsuarios.setModel(tableModel);
     }
 
-    private ArrayList<String[]> leerDatosUsuariosDesdeArchivo() {
-        ArrayList<String[]> datosUsuarios = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\savie\\OneDrive\\Documentos\\GitHub\\proy_contabilidad\\programa_contabilidad\\src\\contabilidad\\fomulario\\database.txt"))) {
+    private ArrayList<String[]> leerdatosDepartamentosDesdeArchivo() {
+        ArrayList<String[]> datosDepartamentos = new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(new FileReader(archivo_patch))) {
             String linea;
             boolean esTablaUsuarios = false;
             
@@ -61,13 +53,13 @@ public class departamento extends javax.swing.JFrame {
                     }
                     
                     String[] campos = linea.split("\\|");
-                    datosUsuarios.add(campos);
+                    datosDepartamentos.add(campos);
                 }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return datosUsuarios;
+        return datosDepartamentos;
     }
     
         private void limpiarCampos() {
@@ -349,7 +341,7 @@ public class departamento extends javax.swing.JFrame {
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
        // Ruta del archivo database.txt (ajusta esto según tu ubicación)
-    String filePath = "C:\\Users\\savie\\OneDrive\\Documentos\\GitHub\\proy_contabilidad\\programa_contabilidad\\src\\contabilidad\\fomulario\\database.txt";
+    String filePath = archivo_patch;
 
     // ID del departamento que deseas eliminar (reemplaza con el valor correcto)
     int departmentIdToDelete = Integer.parseInt(deptoid.getText());
@@ -371,6 +363,9 @@ public class departamento extends javax.swing.JFrame {
                     try {
                         int deptId = Integer.parseInt(fields[0]);
                         if (deptId == departmentIdToDelete) {
+                            if(line.startsWith("-")) {
+                                break;
+                            }
                             // Si el ID del departamento coincide con el que queremos eliminar, no agregamos la línea al contenido
                             JOptionPane.showMessageDialog(null, "Departamento eliminado correctamente");
                             limpiarCampos();
@@ -397,11 +392,9 @@ public class departamento extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
-        // Ruta del archivo database.txt (ajusta esto según tu ubicación)
-        String filePath = "C:\\Users\\savie\\OneDrive\\Documentos\\GitHub\\proy_contabilidad\\programa_contabilidad\\src\\contabilidad\\fomulario\\database.txt";
+       String filePath = archivo_patch;
 
-        // ID del usuario que deseas actualizar (reemplaza con el valor correcto)
-        int userIdToUpdate =  Integer.parseInt(deptoid.getText());
+        int userIdToUpdate = Integer.parseInt(deptoid.getText());
 
         String newdeptoid = deptoid.getText();
         String newdeptodesc = deptodesc.getText();
@@ -414,36 +407,35 @@ public class departamento extends javax.swing.JFrame {
 
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine().trim();
-                content.append(line).append("\n");
 
                 if (line.trim().equals("- DEPARTAMENTO")) {
                     usersSection = true;
+                    content.append(line).append("\n");
                 } else if (usersSection && !line.trim().isEmpty() && !line.startsWith("-")) {
                     String[] fields = line.split("\\|");
-                    if (fields.length >= 1) {
-                        try {
-                            int userId = Integer.parseInt(fields[0]);
-                            if (userId == userIdToUpdate) {
-                                // Actualizar la línea con los nuevos datos
-                                content.append(String.format("%s|%s\n", newdeptoid, newdeptodesc,));
+                    if (fields.length >= 1 && fields[0].matches("\\d+")) {
+                        int userId = Integer.parseInt(fields[0]);
+                        if (userId == userIdToUpdate) {
+                            content.append(userIdToUpdate + "|" + newdeptodesc).append("\n");
+                            continue;
                         }
-                    } catch (NumberFormatException e) {
-                        System.err.println("Error al convertir el ID de usuario: " + e.getMessage());
                     }
+                    content.append(line).append("\n");
+                } else {
+                    content.append(line).append("\n");
                 }
             }
-        }
+            scanner.close();
 
-        // Escribir los datos actualizados en el archivo
-        FileWriter writer = new FileWriter(file);
-        writer.write(content.toString());
-        writer.close();
+            // Escribir los datos actualizados en el archivo
+            FileWriter writer = new FileWriter(file);
+            writer.write(content.toString());
+            writer.close();
 
-        System.out.println("Usuario con ID " + userIdToUpdate + " actualizado correctamente.");
+            System.out.println("Departamento con ID " + userIdToUpdate + " actualizado correctamente.");
         } catch (IOException e) {
             System.err.println("Error al leer o escribir en el archivo: " + e.getMessage());
         }
-
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void deptoidActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deptoidActionPerformed
@@ -464,7 +456,7 @@ public class departamento extends javax.swing.JFrame {
         return;
     }
 
-    File file = new File("C:\\Users\\savie\\OneDrive\\Documentos\\GitHub\\proy_contabilidad\\programa_contabilidad\\src\\contabilidad\\fomulario\\database.txt");
+    File file = new File(archivo_patch);
     try {
         Scanner scanner = new Scanner(file);
         boolean deptExists = false;

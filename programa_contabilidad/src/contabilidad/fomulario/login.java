@@ -15,6 +15,8 @@ public class login extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPasswordField txtPassword;
     private javax.swing.JTextField txtUser;
+    
+    public static String archivo_patch = "C:\\Users\\Udwnetwork\\Desktop\\proy_contabilidad\\programa_contabilidad\\src\\contabilidad\\fomulario\\database.txt";
 
     
     public login() {
@@ -128,7 +130,7 @@ public class login extends javax.swing.JFrame {
     }
 
     private boolean validarCredenciales(String user, String password) {
-        File file = new File("C:\\Users\\savie\\OneDrive\\Documentos\\GitHub\\proy_contabilidad\\programa_contabilidad\\src\\contabilidad\\fomulario\\database.txt");
+        File file = new File(archivo_patch);
         try {
             BufferedReader br = new BufferedReader(new java.io.FileReader(file));
             String line;
@@ -147,8 +149,8 @@ public class login extends javax.swing.JFrame {
         return false;
     }
     
-        private int getUserRol(String user, String password) {
-        File file = new File("C:\\Users\\savie\\OneDrive\\Documentos\\GitHub\\proy_contabilidad\\programa_contabilidad\\src\\contabilidad\\fomulario\\database.txt");
+       private int getUserRol(String user, String password) {
+        File file = new File(archivo_patch);
         try {
             BufferedReader br = new BufferedReader(new java.io.FileReader(file));
             String line;
@@ -164,7 +166,8 @@ public class login extends javax.swing.JFrame {
             e.printStackTrace(); // Imprimir el stack trace completo
             JOptionPane.showMessageDialog(this, "Error al leer la base de datos");
         }
-        return false;
+        //return false;
+        return 0;
     }
 
     public static void main(String args[]) {
